@@ -59,3 +59,6 @@ docs/open-items-2026-08-10.md
 docs/chat-b413e9e0-build-log.md
 docs/cryo_fix.md
 docs/AGENT_HANDOFF.md
+# Incident and ops write-ups that name production hosts and cluster IPs (#200).
+docs/CRYO_WEB_AUTH_502_2026-10-13.md
+docs/HMS_MOVE_SPARK_CATALOG_URI_2026-10-22.md
