@@ -12,6 +12,7 @@ from cryo.domain.models import (
 )
 from cryo.engines.base import RenderedStatement
 from cryo.engines.expire_data_sql import expire_data_metadata, render_expire_data_delete
+from cryo.engines.table_ref import split_table_ref
 from cryo.planner.partitions import DEFAULT_RENDERABLE_CAPABILITIES
 
 
@@ -27,7 +28,11 @@ def session_setup() -> list[str]:
 
 
 def render(plan: MaintenancePlan) -> list[RenderedStatement]:
-    return [_render_operation(plan.table_ref, operation) for operation in plan.operations]
+    parts = split_table_ref(plan.table_ref)
+    if len(parts) > 3:
+        raise ValueError(f"Trino table reference has more than 3 parts: {plan.table_ref!r}")
+    table_ref = quote_qualified_name(*parts)
+    return [_render_operation(table_ref, operation) for operation in plan.operations]
 
 
 def render_predicate(
