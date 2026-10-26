@@ -7,6 +7,7 @@ from uuid import UUID
 from cryo.domain.enums import EngineType, Mode, OperationType
 from cryo.domain.models import MaintenancePlan
 from cryo.planner.planner import build_plan
+from cryo.planner.schema_gates import gate_spark_time_columns
 
 
 class ExecutionDestination(Protocol):
@@ -76,6 +77,7 @@ def build_execution_plan(
         has_shared_location=has_shared_location,
     )
     plan = gate_gc_disabled(plan, gc_disabled=gc_disabled_in_stats(stats))
+    plan = gate_spark_time_columns(plan, engine=destination.engine, stats=stats)
     plan = gate_engine_unsupported(plan, destination=destination)
     return gate_native_optimize_manifests(
         plan,
