@@ -17,9 +17,12 @@ The local stack and an unconfigured install run with `CRYO_ENVIRONMENT=dev` and 
 
 Every API route needs a bearer token, except the sign-in routes and the health checks. Cryo accepts two kinds of token:
 
-Tokens from your identity provider (OIDC)
+**Tokens from your identity provider (OIDC)**
+
 The UI sends you to your provider, and the API swaps the authorization code for the provider's access token (PKCE is supported). Cryo then checks each request's token against the provider's JWKS. This is the production sign-in.
-Tokens Cryo signs itself (HS256)
+
+**Tokens Cryo signs itself (HS256)**
+
 These are issued by password sign-in for local users, by Google sign-in, and by the dev token route. They're signed with `CRYO_JWT_SECRET`, or with `CRYO_SECRET_KEY` when that's unset, and they last 24 hours.
 
 `/healthz`, `/readyz`, `/healthz/deep` and `/metrics` need no token. Keep them off the public internet; see [Install](https://tech-pw.github.io/cryo/install/#verify).
@@ -95,9 +98,12 @@ The code default is `dev-only-change-me`. Because that value is published, a dep
 
 Set `CRYO_JWT_SECRET` to a separate random value, so you can rotate token signing without touching stored secrets.
 
-Rotating `CRYO_JWT_SECRET`
+**Rotating `CRYO_JWT_SECRET`**
+
 Every HS256 token stops working at once, and people sign in again. Cryo can't revoke a single HS256 token, so rotation is the way to end every session. Tokens from your identity provider aren't affected. Their lifetime and refresh follow your provider's settings.
-Rotating `CRYO_SECRET_KEY`
+
+**Rotating `CRYO_SECRET_KEY`**
+
 There's no re-encryption tool. After a change, every stored secret fails to decrypt until an admin enters it again. Rotate only when you have to, and keep the old key until every secret has been re-entered. If `CRYO_JWT_SECRET` is unset, this rotation also ends every HS256 session.
 
 ## What Cryo stores

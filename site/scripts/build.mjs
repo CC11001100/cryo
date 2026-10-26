@@ -287,6 +287,8 @@ function htmlToMarkdown(html, holds = null) {
     if (link && note) return `\n- [${inlineText(link[2])}](${link[1]}): ${inlineText(note[1])}\n`;
     return `\n- ${inlineText(inner)}\n`;
   });
+  s = s.replace(/<dt[^>]*>([\s\S]*?)<\/dt>/gi, (_, inner) => `\n\n**${inlineText(inner)}**\n`);
+  s = s.replace(/<dd[^>]*>([\s\S]*?)<\/dd>/gi, (_, inner) => `\n${inlineText(inner)}\n`);
   s = s.replace(/<p class="ops-phase"[^>]*>([\s\S]*?)<\/p>/gi, (_, inner) => `\n\n**${inlineText(inner)}**\n\n`);
   s = s.replace(/<thead>[\s\S]*?<\/thead>/gi, (head) => {
     const cells = [...head.matchAll(/<th[^>]*>([\s\S]*?)<\/th>/gi)].map((m) => escapePipes(inlineText(m[1])));
@@ -483,7 +485,7 @@ function renderDoc(entry) {
   const issue = `${cfg.repo}/issues/new?title=${encodeURIComponent(`docs: ${title}`)}&body=${encodeURIComponent(`Page: ${cfg.url}/${urlOf(slug)}\n\nWhat is wrong or missing?\n`)}&labels=documentation`;
   const mdHref = `${root}${urlOf(slug)}index.md`;
   const metaRow = `<div class="doc-meta"><span>Updated <time datetime="${updated}">${updated}</time></span><span class="dot" aria-hidden="true"></span><span>${mins} min read</span><span class="meta-links"><a href="${edit}">${PEN_ICON}Edit this page</a><button class="share-page" type="button">${SHARE_ICON}<span>Share</span></button><a href="${issue}">${BUG_ICON}Report an issue</a><a class="md-page" href="${mdHref}">View as Markdown</a></span><button class="copy-page" type="button" data-md="${mdHref}">Copy page</button></div>`;
-  const community = `<aside class="community"><div><p class="cm-h">Stuck, or have an idea?</p><p>Cryo is built in the open. Ask in GitHub Discussions, open an issue, or send a pull request.</p></div><div class="cm-actions"><a class="btn btn-sm" href="${cfg.repo}/discussions">Discussions</a><a class="btn btn-sm" href="${cfg.repo}/issues">Issues</a><a class="btn btn-sm btn-primary" href="${cfg.repo}">${GH_ICON}Star on GitHub</a></div></aside>`;
+  const community = `<aside class="community"><div><p class="cm-h">Stuck, or have an idea?</p><p>Cryo is built in the open. Check Troubleshooting, open an issue, or send a pull request.</p></div><div class="cm-actions"><a class="btn btn-sm" href="${root}${urlOf("troubleshooting")}">Troubleshooting</a><a class="btn btn-sm" href="${cfg.repo}/issues">Issues</a><a class="btn btn-sm btn-primary" href="${cfg.repo}">${GH_ICON}Star on GitHub</a></div></aside>`;
   const canonical = `${cfg.url}/${urlOf(slug)}`;
   const mdUrl = `${canonical}index.md`;
   const html = `<!doctype html><html lang="en">${head({ root, title, desc: meta.description || meta.lede, canonical, slug, markdown: mdHref })}<body class="docs" data-page="${slug || "home"}" data-root="${root}"><a class="skip" href="#main">Skip to content</a>${header(root, entry.group.id)}<div class="shell">${sidebar(root, slug)}<main class="main" id="main"><article class="doc"><header class="doc-head">${crumbs}<h1>${esc(title)}</h1><p class="lede">${meta.lede}</p>${metaRow}</header>${t.mobile}<div class="prose">${content}</div>${community}${pager}</article></main>${t.rail}</div>${footer(root)}${SEARCH_DIALOG}<script src="${root}assets/js/site.js?v=${JS_REV}" defer></script></body></html>`;

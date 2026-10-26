@@ -15,10 +15,21 @@ Pre-1.0 · Apache-2.0→
 
 Cryo reads your catalogs, plans compaction and cleanup, and admits the work to its native engine when the cluster has headroom — every decision explained.
 
-Operations7
-Engines2
-SQL in planner0
-Receipt per action1
+**Operations**
+
+7
+
+**Engines**
+
+2
+
+**SQL in planner**
+
+0
+
+**Receipt per action**
+
+1
 
 Start with the quickstart
 See how it fits together
@@ -83,22 +94,34 @@ TABLE BEFORE
 
 chunk 1 · 38 GB
 
-Files
+**Files**
+
 2,140
-Avg size
+
+**Avg size**
+
 18 MB
-Small files
+
+**Small files**
+
 2,140
 
 Scan · metadata only
 
-manifests read
+**manifests read**
+
 212
-data files listed
+
+**data files listed**
+
 2,140
-partition size
+
+**partition size**
+
 38 GB
-data files opened
+
+**data files opened**
+
 0
 
 Plan · 1 chunk
@@ -125,21 +148,31 @@ Receipt · audit log
 
 ✓`optimize` succeeded
 
-engine
+**engine**
+
 trino-b
-duration
+
+**duration**
+
 4m 12s
-files
+
+**files**
+
 2,140 → 152
 
 TABLE AFTER
 receipt
 
-Files
+**Files**
+
 152
-Avg size
+
+**Avg size**
+
 256 MB
-Small files
+
+**Small files**
+
 0
 
 - **01 Scan** Reads metadata. Never opens data files.
@@ -323,20 +356,28 @@ Guarantees
 
 These are design rules of the platform, not options you switch on.
 
-Read stays apart from write
+**Read stays apart from write**
+
 Sources are where tables live. Destinations are where work runs. They have separate tables, configs and code.
+
 How the split works
 
-The plan contains no SQL
+**The plan contains no SQL**
+
 The planner emits operations and partition predicates. Trino and Spark each render their own dialect.
+
 Engines and renderers
 
-Engine load decides concurrency
+**Engine load decides concurrency**
+
 The governor probes live Trino and Spark load before admitting work. Adding workers does not add parallel rewrites.
+
 How admission works
 
-Every action leaves a receipt
+**Every action leaves a receipt**
+
 Table, operation, engine, status and duration are written to an audit row, whether the run succeeded or not.
+
 Who does what
 
 audit log · live example

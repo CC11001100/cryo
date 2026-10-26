@@ -13,11 +13,16 @@ A source answers where an Apache Iceberg table lives. A destination answers wher
 
 Cryo keeps reading and writing apart, down to separate database tables, configs and code. A catalog connection never carries engine credentials, and an engine never learns how to read a catalog.
 
-Source (read side)
+**Source (read side)**
+
 Answers where a table lives and how to read its metadata. Supported catalogs are Iceberg REST, Hive, Glue, Apache Polaris, and Project Nessie. Unity Catalog and JDBC are not supported. Polaris and Nessie use the REST adapter. Branch and tag operations are not exposed.
-Preset (binding)
+
+**Preset (binding)**
+
 Binds what to do, on which destination, when, and to which tables. A preset never holds raw SQL.
-Destination (write side)
+
+**Destination (write side)**
+
 Answers where to submit maintenance work. Trino and Spark execute. Native Go executes when enabled. Flink generates a config and does not submit a job.
 
 Figure 1Read from a source, bind with a preset, write through a destination

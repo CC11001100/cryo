@@ -77,6 +77,18 @@
         {
           "slug": "security",
           "label": "Security"
+        },
+        {
+          "slug": "upgrade",
+          "label": "Upgrade and rollback"
+        },
+        {
+          "slug": "backup",
+          "label": "Backup and restore"
+        },
+        {
+          "slug": "troubleshooting",
+          "label": "Troubleshooting"
         }
       ]
     },

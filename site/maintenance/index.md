@@ -165,11 +165,16 @@ A worker runs one job at a time, so the fleet drains at roughly replicas divided
 
 ## Three guardrails, always on
 
-Cooldown
+**Cooldown**
+
 Skip tables maintained within the last N hours, read from the audit log and engine history.
-Per-table lock
+
+**Per-table lock**
+
 A Redis lock held for the job's lifetime, so a table is never maintained twice at once.
-Failure isolation
+
+**Failure isolation**
+
 One job's failure is recorded against that table. The run continues with the next one.
 
 Destructive operations are guarded
@@ -180,9 +185,12 @@ Destructive operations are guarded
 
 A hold stops new maintenance without cancelling anything. It is the switch for an engine upgrade, an incident, or a change freeze. Set one from **Runs → Holds**:
 
-Hold destination
+**Hold destination**
+
 Pauses one engine. Every other engine keeps running. Operators and admins can set it, and the dialog lists each configured engine by name.
-Hold all maintenance
+
+**Hold all maintenance**
+
 Pauses every engine. Admin only.
 
 Both need a reason of at least three characters, and resuming needs a verification note. Every change is recorded with who made it and a new control generation.

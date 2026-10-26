@@ -89,10 +89,13 @@ cryo.local/settings/connections?tab=engines
 
 *Cryo engines run inside the deployment. Your engines are clusters you connected.*
 
-Cryo engines
+**Cryo engines**
+
 Shipped with Cryo and run inside the deployment: the native engine (a subprocess on Cryo's workers) and Spark on Kubernetes (an engine with `submit_mode: k8s`). Migrations seed them.
-Your engines
-Trino, EMR Serverless or Flink clusters you added with New engine. Presets and manual runs can target any of them.
+
+**Your engines**
+
+Trino, EMR Serverless or Flink clusters you added with **New engine**. Presets and manual runs can target any of them.
 
 Cryo engines stay editable, because operators tune their slot caps and timeouts. Other work depends on them, so **Edit** and **Disable** ask for confirmation first and say what changes:
 

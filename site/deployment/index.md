@@ -25,11 +25,16 @@ The scheduler and the governor are leader-elected, so several replicas may start
 
 ## Layout in three lines
 
-Helm chart
+**Helm chart**
+
 The chart lives at `deploy/helm/cryo`. Defaults are committed, and overrides are per environment.
-Stores
+
+**Stores**
+
 PostgreSQL and Redis are required. PostgreSQL is always external, so you can use a managed service. Redis can be external too, or you can use the chart's single in-namespace Redis, which has no volume.
-Engines
+
+**Engines**
+
 Engines stay outside the chart. Cryo reaches them through source and destination configs stored in the database.
 
 ## Request floor
@@ -65,7 +70,7 @@ This page describes the shape of a deployment. The chart's defaults and the loca
 
 ## Where to go next
 
-Install on KubernetesA pinned, production Helm install, step by step.SecuritySign-in, roles, secrets and a hardening checklist.ArchitectureThe system context these workloads implement.EnginesHow the same plan renders as Trino or Spark SQL.QuickstartRun the same components locally with Docker first.ReferencePublic API surfaces and what is in the box.
+Install on KubernetesA pinned, production Helm install, step by step.SecuritySign-in, roles, secrets and a hardening checklist.Upgrade and rollbackMove between releases, and what a rollback undoes.Backup and restoreWhat to back up, and a restore you can practise.ArchitectureThe system context these workloads implement.EnginesHow the same plan renders as Trino or Spark SQL.QuickstartRun the same components locally with Docker first.ReferencePublic API surfaces and what is in the box.
 
 Source: https://tech-pw.github.io/cryo/deployment/
 Markdown: https://tech-pw.github.io/cryo/deployment/index.md
