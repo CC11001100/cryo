@@ -245,3 +245,11 @@ def test_trino_keeps_an_already_quoted_table_ref_and_escapes_embedded_quotes() -
 def test_trino_rejects_malformed_table_refs(table_ref: str) -> None:
     with pytest.raises(ValueError):
         render(_manifests_plan(table_ref))
+
+
+def test_trino_renders_the_files_metadata_table_inside_the_table_schema() -> None:
+    plain = render(_manifests_plan("iceberg.demo.events"))[0]
+    odd = render(_manifests_plan('iceberg.demo."a""b c"'))[0]
+
+    assert plain.metadata["files_ref"] == 'iceberg.demo."events$files"'
+    assert odd.metadata["files_ref"] == 'iceberg.demo."a""b c$files"'
